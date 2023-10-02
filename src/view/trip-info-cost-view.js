@@ -1,12 +1,14 @@
 import { createElement } from '../render.js';
 
-function createTripInfoTemplate() {
-  return '<section class="trip-main__trip-info  trip-info"></section>';
+function createTripInfoCostTemplate() {
+  return `<p class="trip-info__cost">
+            Total: &euro;&nbsp;<span class="trip-info__cost-value">1230</span>
+          </p>`;
 }
 
-export default class TripInfoView {
+export default class TripInfoCostView {
   getTemplate() {
-    return createTripInfoTemplate();
+    return createTripInfoCostTemplate();
   }
 
   getElement() {
