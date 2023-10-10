@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 
 function createTripInfoCostTemplate() {
   return `<p class="trip-info__cost">
@@ -6,20 +6,8 @@ function createTripInfoCostTemplate() {
           </p>`;
 }
 
-export default class TripInfoCostView {
-  getTemplate() {
+export default class TripInfoCostView extends AbstractView {
+  get template() {
     return createTripInfoCostTemplate();
-  }
-
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
   }
 }
