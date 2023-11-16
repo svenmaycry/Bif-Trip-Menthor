@@ -1,26 +1,25 @@
-import { render, RenderPosition } from './framework/render.js';
+import { render } from './framework/render.js';
 import FilterView from './view/filter-view.js';
-import TripInfoView from './view/trip-info-view.js';
-import TripInfoMainView from './view/trip-info-main-view.js';
-import TripInfoCostView from './view/trip-info-cost-view.js';
-import TripPlanPresenter from './presenter/trip-plan-presenter.js';
-import TripEventsModel from './model/trip-events-model.js';
+import PlanPresenter from './presenter/plan-presenter.js';
+import InfoPresenter from './presenter/info-presenter.js';
+import EventsModel from './model/events-model.js';
+import { generateFilter } from './mock/filter.js';
 
 const tripMainContainer = document.querySelector('.trip-main');
 const filtersContainer = tripMainContainer.querySelector('.trip-controls__filters');
-const tripPlanContainer = document.querySelector('.trip-events');
-const tripEventsModel = new TripEventsModel();
+const planContainer = document.querySelector('.trip-events');
+const eventsModel = new EventsModel();
 
-const tripPlanPresenter = new TripPlanPresenter({
-  tripPlanContainer: tripPlanContainer,
-  tripEventsModel,
+const planPresenter = new PlanPresenter({ planContainer, eventsModel });
+
+const infoPresenter = new InfoPresenter({
+  infoContainer: tripMainContainer,
+  eventsModel: eventsModel,
 });
 
+infoPresenter.init();
 
-render(new TripInfoView(), tripMainContainer, RenderPosition.AFTERBEGIN);
-const tripInfoContainer = document.querySelector('.trip-main__trip-info');
-render(new TripInfoMainView, tripInfoContainer);
-render(new TripInfoCostView, tripInfoContainer);
-render(new FilterView(), filtersContainer);
+const filters = generateFilter(eventsModel.events);
+render(new FilterView({ filters }), filtersContainer);
 
-tripPlanPresenter.init();
+planPresenter.init();
